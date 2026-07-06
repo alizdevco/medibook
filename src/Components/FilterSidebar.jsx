@@ -1,7 +1,13 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { SPECIALTIES, CITIES, INSURANCES } from "../data/constansts";
 import Dropdown from "./Dropdown";
 const FilterSidebar = memo(function ({ filters, initialValue, isOpen }) {
+  const handleMinRating = useCallback(
+    function (val) {
+      return filters.setMinRating(val);
+    },
+    [filters.setMinRating],
+  );
   return (
     <div className={`filter-sidebar ${isOpen ? "mobile-open" : ""}`}>
       <div className="filter-sidebar-head">
@@ -47,7 +53,7 @@ const FilterSidebar = memo(function ({ filters, initialValue, isOpen }) {
       <div className="filter-group">
         <RangeSlider
           value={filters.minRating}
-          onChange={(val) => filters.setMinRating(val)}
+          onChange={handleMinRating}
           min={0}
           max={5}
         />
@@ -148,7 +154,7 @@ function Insurance({ filters }) {
     </>
   );
 }
-function RangeSlider({ value, onChange, min = 0, max = 100 }) {
+const RangeSlider = memo(function ({ value, onChange, min = 0, max = 100 }) {
   const percentage = ((value - min) / (max - min)) * 100;
 
   return (
@@ -175,7 +181,7 @@ function RangeSlider({ value, onChange, min = 0, max = 100 }) {
       <span className="range-value">{value}</span>
     </div>
   );
-}
+});
 function Availability({ filters }) {
   return (
     <>

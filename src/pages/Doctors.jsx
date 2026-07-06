@@ -41,15 +41,12 @@ export default function Doctors() {
   });
 
   const sortedDoctors = useMemo(() => {
-    return [...filteredDoctors].sort(
-      (a, b) => {
-        if (sortBy === "rating") return b.rating - a.rating;
-        if (sortBy === "experience") return b.experience - a.experience;
-        if (sortBy === "price") return a.price - b.price;
-        return 0;
-      },
-      [filteredDoctors],
-    );
+    return [...filteredDoctors].sort((a, b) => {
+      if (sortBy === "rating") return b.rating - a.rating;
+      if (sortBy === "experience") return b.experience - a.experience;
+      if (sortBy === "price") return a.price - b.price;
+      return 0;
+    });
   }, [filteredDoctors, sortBy]);
   const docGrid = useMemo(
     () => sortedDoctors.slice(start, end),

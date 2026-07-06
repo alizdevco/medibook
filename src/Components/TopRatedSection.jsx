@@ -7,7 +7,7 @@ export default function TopRatedSection({ doctors }) {
   const topRated = useMemo(() => {
     return doctors.slice(0, 3);
   }, [doctors]);
-  console.log(doctors);
+
   return (
     <section className="section-card-bg">
       <div className="section">

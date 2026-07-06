@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const AppointmentsContext = createContext();
 export default function AppointmentsProvider({ children }) {
   const [appointments, setAppointments] = useState([]);
-  console.log(appointments);
+
   function removeAppointment(name) {
     setAppointments((prev) => prev.filter((item) => item.doctorName !== name));
   }

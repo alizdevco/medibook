@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function HeroSearch({ onSearch }) {
+const HeroSearch = memo(function ({ onSearch }) {
   const [nameInput, setNameInput] = useState("");
   const [cityInput, setCityInput] = useState("");
   function handleNameChange(e) {
@@ -44,4 +44,5 @@ export default function HeroSearch({ onSearch }) {
       </button>
     </div>
   );
-}
+});
+export default HeroSearch;

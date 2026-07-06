@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import StarRating from "./StarRating";
-import { memo } from "react";
 
-const DoctorCard = memo(function ({ doctor }) {
+const DoctorCard = function ({ doctor }) {
   return (
     <div className="doctor-card card">
       <div className="doctor-card-top">
@@ -119,5 +118,5 @@ const DoctorCard = memo(function ({ doctor }) {
       </div>
     </div>
   );
-});
+};
 export default DoctorCard;

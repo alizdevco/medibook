@@ -204,7 +204,9 @@ const ProfileHeaderCard = memo(function ({ doctor }) {
           </div>
           <div className="tag-list">
             {doctor.insurance.split(", ").map((item) => (
-              <span className="tag">{item}</span>
+              <span className="tag" key={item}>
+                {item}
+              </span>
             ))}
           </div>
         </div>
@@ -387,8 +389,7 @@ function BookAppointment({ doctor, selectedDate, selectedSlot, status }) {
   const isBooked = appointments.some(
     (a) => a.doctorName === doctor.name && a.status === "upcoming",
   );
-  console.log(isBooked);
-  console.log(status);
+
   function handleAppointments() {
     if (!selectedSlot && !selectedDate) return;
     const appointInfo = {
