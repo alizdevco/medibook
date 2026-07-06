@@ -2,7 +2,7 @@ export default function HeroMedia() {
   return (
     <div className="hero-media">
       <div className="hero-image-wrap">
-        <img src="/src/public/hero-doctor.png" alt="Doctor" />
+        <img src="/hero-doctor.png" alt="Doctor" />
       </div>
 
       <div className="hero-float-card rating card">
