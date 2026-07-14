@@ -79,7 +79,7 @@ function NavActions({ onToggleNavbar, session }) {
     <div className="navbar-actions">
       <Link to="/login">
         <button className="btn btn-ghost btn-lg">
-          {session && <span>Hi {session.user.email}</span>}
+          {session ? <span>Hi {session.user.email}</span> : <span>signIn</span>}
         </button>
       </Link>
       <Link to="/doctors" className="btn btn-default btn-lg find-doctor">
