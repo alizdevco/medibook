@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import { useAppointments } from "../context/AppointmentsContext ";
 function reducer(state, action) {
   switch (action.type) {
     case "SELECT":
@@ -13,7 +12,6 @@ function reducer(state, action) {
   }
 }
 export default function useBookingStatus() {
-  const { removeAppointment } = useAppointments();
   const [state, dispatch] = useReducer(reducer, { status: "idle" });
   function onSelect() {
     dispatch({ type: "SELECT" });
@@ -23,7 +21,6 @@ export default function useBookingStatus() {
   }
   function onEdit(doctor) {
     dispatch({ type: "EDIT" });
-    removeAppointment(doctor.name);
   }
   return {
     bookingProp: { onSelect, status: state.status, onConfirm, onEdit },

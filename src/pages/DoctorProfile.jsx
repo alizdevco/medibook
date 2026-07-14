@@ -1,8 +1,9 @@
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import useDateSlotPicker from "../hooks/useDateSlotPicker";
 import useBookingStatus from "../hooks/useBookingStatus";
 import { memo } from "react";
-import { useAppointments } from "../context/AppointmentsContext ";
+import { useAuth } from "../context/AuthContext";
+import { createAppointment } from "../api/appointments";
 
 const days = [
   { dow: "Sun", dom: 20, slots: 4, disabled: true },
@@ -385,28 +386,27 @@ function TimeSlotsSection({ slotProp, bookingProp, doctor }) {
 }
 function BookAppointment({ doctor, selectedDate, selectedSlot, status }) {
   const navigate = useNavigate();
-  const { appointments, setAppointments } = useAppointments();
-  const isBooked = appointments.some(
-    (a) => a.doctorName === doctor.name && a.status === "upcoming",
-  );
+  const { session } = useAuth();
+  const doc = useLoaderData();
 
-  function handleAppointments() {
-    if (!selectedSlot && !selectedDate) return;
-    const appointInfo = {
-      id: Date.now(),
-      status: "upcoming",
-      confirmed: true,
-      doctorName: doctor.name,
-      specialty: doctor.specialty,
-      avatar: doctor.avatar,
-      location: doctor.city,
-      date: selectedDate?.dow,
-      time: selectedSlot,
-      type: "in-clinic",
-    };
-    setAppointments((prev) => [...prev, appointInfo]);
+  async function handleConfirm() {
+    if (!session) {
+      navigate("/login");
+      return;
+    }
+
+    await createAppointment(
+      doc.id,
+      "2026-07-21",
+      selectedSlot,
+      doc.address,
+      doc.price,
+      "upcoming",
+      session.user.id,
+    );
     navigate("/appointments");
   }
+
   return (
     <div className="booking-card card">
       <div className="booking-card-title">Book appointment</div>
@@ -441,8 +441,8 @@ function BookAppointment({ doctor, selectedDate, selectedSlot, status }) {
 
       <button
         className={`btn btn-default btn-lg`}
-        disabled={status !== "confirmed" || isBooked}
-        onClick={handleAppointments}
+        disabled={status !== "confirmed"}
+        onClick={handleConfirm}
       >
         ✓ Confirm appointment
       </button>

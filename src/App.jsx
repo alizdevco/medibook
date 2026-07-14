@@ -1,13 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy } from "react";
-import AppointmentsProvider from "./context/AppointmentsContext ";
+
 import AppLayout from "./pages/AppLayout";
-import { about, doctorProfileLoader, doctorsLoader } from "./api/doctors";
+import { doctorProfileLoader, doctorsLoader } from "./api/doctors";
 const Home = lazy(() => import("./pages/Home"));
 const Doctors = lazy(() => import("./pages/Doctors"));
 const DoctorProfile = lazy(() => import("./pages/DoctorProfile"));
 const Appointments = lazy(() => import("./pages/Appointments"));
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import { AuthProvider } from "./context/AuthContext";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,14 +27,14 @@ const router = createBrowserRouter([
         errorElement: <NotFound />,
       },
       { path: "/appointments", element: <Appointments /> },
-    
+      { path: "/login", element: <Login /> },
     ],
   },
 ]);
 export default function App() {
   return (
-    <AppointmentsProvider>
+    <AuthProvider>
       <RouterProvider router={router}></RouterProvider>
-    </AppointmentsProvider>
+    </AuthProvider>
   );
 }

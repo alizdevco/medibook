@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 
 const HeroSearch = memo(function ({ onSearch }) {
   const [nameInput, setNameInput] = useState("");

@@ -1,5 +1,6 @@
 // src/api/doctors.js
 
+import { supabase } from "../supabase";
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const RESOURCE_NAME = "dotcors";
 
@@ -18,11 +19,21 @@ async function fetchFromApi(endpoint = "") {
   }
 }
 export async function getAllDoctors() {
-  return await fetchFromApi();
+  const { data, error } = await supabase.from("doctors").select("*");
+  if (error) {
+    console.error("error");
+    throw new Error();
+  }
+  return data;
 }
 
 export async function getDoctorById(id) {
-  return await fetchFromApi(`/${id}`);
+  const { data, error } = await supabase
+    .from("doctors")
+    .select("*")
+    .eq("id", id);
+  console.log(data);
+  return data[0];
 }
 export async function doctorsLoader() {
   return await getAllDoctors();

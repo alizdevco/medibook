@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const links = [
   { label: "Home", to: "/" },
@@ -8,6 +9,7 @@ const links = [
 ];
 
 export default function Navbar() {
+  const { session } = useAuth();
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
   function toggleNavbar() {
     setIsNavBarOpen((prev) => {
@@ -22,7 +24,7 @@ export default function Navbar() {
         <div className="navbar-inner">
           <Logo />
           <NavLinks />
-          <NavActions onToggleNavbar={toggleNavbar} />
+          <NavActions session={session} onToggleNavbar={toggleNavbar} />
         </div>
       </header>
       <div
@@ -72,10 +74,14 @@ function NavLinks() {
   );
 }
 
-function NavActions({ onToggleNavbar }) {
+function NavActions({ onToggleNavbar, session }) {
   return (
     <div className="navbar-actions">
-      <button className="btn btn-ghost btn-lg">Sign In</button>
+      <Link to="/login">
+        <button className="btn btn-ghost btn-lg">
+          {session && <span>Hi {session.user.email}</span>}
+        </button>
+      </Link>
       <Link to="/doctors" className="btn btn-default btn-lg find-doctor">
         Find a Doctor
       </Link>
