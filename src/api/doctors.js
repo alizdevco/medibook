@@ -32,7 +32,7 @@ export async function getDoctorById(id) {
     .from("doctors")
     .select("*")
     .eq("id", id);
-  console.log(data);
+
   return data[0];
 }
 export async function doctorsLoader() {

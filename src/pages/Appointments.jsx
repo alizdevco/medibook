@@ -13,7 +13,6 @@ export default function Appointments() {
     async function getData() {
       const appointments = await getMyAppointments();
       setAppointments(appointments);
-      console.log(appointments);
     }
     getData();
   }, []);
